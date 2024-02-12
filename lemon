@@ -1,0 +1,59 @@
+#!/bin/sh
+
+#written by rs
+#quick and hacky lemonbar script, depends on lemonbar (duhhh) sndioctli (audio) and EWMH compliant wm (Work module)
+#colorscheme is semi-custom, I mixed colors from palletes i liked.
+#if you don't know something read the man page for lemonbar
+
+#%{l} - left
+#%{c} - center
+#%{r} - right
+
+
+#TEXT:
+
+TextLeft() {
+	printf "wrk"
+}
+
+TextRight() {
+	printf "vol"
+}
+
+#COLORS:
+
+Fg() {
+	echo "%{F#FAF4ED}"
+}
+
+Bg() {
+	echo "%{B#FFFFFF}"
+}
+
+Accent1() {
+	echo "%{B#FFFFFF}"
+}
+
+Accent2() {	
+	echo "%{B#000000}"
+}
+
+#MODULES:
+
+Work() {
+	WRKBNCH=$(xprop -root 32c '\t$0' _NET_CURRENT_DESKTOP | cut -f 2)
+
+	printf %s " $WRKBNCH "
+}
+
+Time() {
+	TIME=$(date +" %d/%m %H:%M")
+	printf %s " $TIME "
+}
+
+#OUTPUT:
+
+while true; do
+	echo "%{l}$(Fg)$(Accent2) $(TextLeft) %{F#000000}$(Bg)$(Work)%{c}%{F#000000}$(Bg)$(Time)%{r}$(Fg)$(Accent2) $(TextRight) $(Fg)$(Accent1)"
+	sleep 0.1
+done;
